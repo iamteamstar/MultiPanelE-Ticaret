@@ -25,21 +25,27 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+                        <li>
+                            <a href="/Admin/Dashboard" class="btn btn-primary">Dashboard</a>
+                            <a href="/Admin/User/Index" class="btn btn-success">Kulllanıcı Yönetimi</a>
+                        </li>
                     </ul>
                 </div>
             </div>
+            @if (User.Identity != null && User.Identity.IsAuthenticated)
+            {
+                <form asp-controller="Account" asp-action="Logout" method="post" style="display:inline;">
+                    @Html.AntiForgeryToken()
+                    <button type="submit">Çıkış Yap</button>
+                </form>
+            }
+            else
+            {
+                <a href="/Account/Login">Giriş Yap</a>
+            }
         </nav>
-        @if (User.Identity != null && User.Identity.IsAuthenticated)
-        {
-            <form asp-controller="Account" asp-action="Logout" method="post" style="display:inline;">
-                @Html.AntiForgeryToken()
-                <button type="submit">Çıkış Yap</button>
-            </form>
-        }
-        else
-        {
-            <a href="/Account/Login">Giriş Yap</a>
-        }
+        
+
 
     </header>
     <div class="container">

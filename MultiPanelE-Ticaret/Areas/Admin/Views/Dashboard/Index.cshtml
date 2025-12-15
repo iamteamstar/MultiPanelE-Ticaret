@@ -1,15 +1,47 @@
-﻿@{
+﻿@model MultiPanelE_Ticaret.Areas.Admin.ViewModels.AdminDashboardViewModel
+
+@{
     ViewData["Title"] = "Admin Dashboard";
 }
 
 <h1>Admin Dashboard</h1>
 
-<p>Hoş geldin, @User.Identity?.Name</p>
+<hr />
 
-<ul>
-    <li>Sipariş Yönetimi</li>
-    <li>Kurye Atama</li>
-    <li>Satıcı Yönetimi</li>
-    <li>Kullanıcı Yönetimi</li>
-</ul>
+<div>
+    <strong>Toplam Kullanıcı:</strong> @Model.TotalUsers <br />
+    <strong>Toplam Sipariş:</strong> @Model.TotalOrders <br />
+    <strong>Bekleyen Sipariş:</strong> @Model.PendingOrders <br />
+    <strong>Aktif Kurye:</strong> @Model.ActiveCouriers
+</div>
+
+<hr />
+
+<h3>Son Siparişler</h3>
+
+<table border="1" cellpadding="6">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Kullanıcı</th>
+            <th>Durum</th>
+            <th>Tarih</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var order in Model.RecentOrders)
+        {
+            <tr>
+                <td>@order.OrderId</td>
+                <td>@order.UserEmail</td>
+                <td>@order.Status</td>
+                <td>@order.CreatedAt.ToString("dd.MM.yyyy HH:mm")</td>
+            </tr>
+        }
+    </tbody>
     
+
+</table>
+<p>
+    <a href="/Admin/User/Create">➕ Yeni Kullanıcı Oluştur</a>
+</p>
