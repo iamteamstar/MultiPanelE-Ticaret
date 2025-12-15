@@ -125,7 +125,6 @@ C:\Users\technopc\Desktop\Full Stack Web\Backend\Files\MultiPanelE-Ticaret\Multi
 C:\Users\technopc\Desktop\Full Stack Web\Backend\Files\MultiPanelE-Ticaret\MultiPanelE-Ticaret\obj\Debug\net8.0\rjimswa.dswa.cache.json
 C:\Users\technopc\Desktop\Full Stack Web\Backend\Files\MultiPanelE-Ticaret\MultiPanelE-Ticaret\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
 C:\Users\technopc\Desktop\Full Stack Web\Backend\Files\MultiPanelE-Ticaret\MultiPanelE-Ticaret\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json
-C:\Users\technopc\Desktop\Full Stack Web\Backend\Files\MultiPanelE-Ticaret\MultiPanelE-Ticaret\obj\Debug\net8.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
 C:\Users\technopc\Desktop\Full Stack Web\Backend\Files\MultiPanelE-Ticaret\MultiPanelE-Ticaret\obj\Debug\net8.0\scopedcss\bundle\MultiPanelE-Ticaret.styles.css
 C:\Users\technopc\Desktop\Full Stack Web\Backend\Files\MultiPanelE-Ticaret\MultiPanelE-Ticaret\obj\Debug\net8.0\scopedcss\projectbundle\MultiPanelE-Ticaret.bundle.scp.css
 C:\Users\technopc\Desktop\Full Stack Web\Backend\Files\MultiPanelE-Ticaret\MultiPanelE-Ticaret\obj\Debug\net8.0\staticwebassets.build.json
@@ -139,3 +138,4 @@ C:\Users\technopc\Desktop\Full Stack Web\Backend\Files\MultiPanelE-Ticaret\Multi
 C:\Users\technopc\Desktop\Full Stack Web\Backend\Files\MultiPanelE-Ticaret\MultiPanelE-Ticaret\obj\Debug\net8.0\MultiPanelE-Ticaret.pdb
 C:\Users\technopc\Desktop\Full Stack Web\Backend\Files\MultiPanelE-Ticaret\MultiPanelE-Ticaret\obj\Debug\net8.0\MultiPanelE-Ticaret.genruntimeconfig.cache
 C:\Users\technopc\Desktop\Full Stack Web\Backend\Files\MultiPanelE-Ticaret\MultiPanelE-Ticaret\obj\Debug\net8.0\ref\MultiPanelE-Ticaret.dll
+C:\Users\technopc\Desktop\Full Stack Web\Backend\Files\MultiPanelE-Ticaret\MultiPanelE-Ticaret\obj\Debug\net8.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
