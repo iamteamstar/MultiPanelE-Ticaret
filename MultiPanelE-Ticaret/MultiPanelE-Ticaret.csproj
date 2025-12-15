@@ -22,7 +22,6 @@
     <Folder Include="Core\DTOs\" />
     <Folder Include="Core\Interfaces\" />
     <Folder Include="Data\Configurations\" />
-    <Folder Include="Data\Seed\" />
     <Folder Include="Services\Courier\" />
     <Folder Include="Services\User\" />
     <Folder Include="Services\Order\" />
