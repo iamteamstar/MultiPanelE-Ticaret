@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36616.10 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiPanelE-Ticaret", "MultiPanelE-Ticaret\MultiPanelE-Ticaret.csproj", "{F155AA76-255B-44FA-B7D1-1244D2EEAF6B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F155AA76-255B-44FA-B7D1-1244D2EEAF6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F155AA76-255B-44FA-B7D1-1244D2EEAF6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F155AA76-255B-44FA-B7D1-1244D2EEAF6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F155AA76-255B-44FA-B7D1-1244D2EEAF6B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C9A58837-E858-4AB6-8955-61DE3B33EAD2}
+	EndGlobalSection
+EndGlobal
