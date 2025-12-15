@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MultiPanelE-Ticaret")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4352b1d8a0d1cce6e677ceb1a37dcff02d941435")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9de06ca932021d5a85d0ec9b773aa64bab583a7f")]
 [assembly: System.Reflection.AssemblyProductAttribute("MultiPanelE-Ticaret")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MultiPanelE-Ticaret")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
