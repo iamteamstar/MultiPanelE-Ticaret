@@ -4,7 +4,9 @@
     {
         Created = 0,
         Preparing = 1,
-        OnTheWay = 2,
-        Delivered = 3
+        AssignedToCourier = 2,
+        OnTheWay = 3,
+        Delivered = 4,
+        Cancelled = 5
     }
 }

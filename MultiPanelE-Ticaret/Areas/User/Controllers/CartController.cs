@@ -75,5 +75,6 @@ namespace MultiPanelE_Ticaret.Areas.User.Controllers
             HttpContext.Session.SetString(CART_KEY,
                 JsonSerializer.Serialize(cart));
         }
+
     }
 }

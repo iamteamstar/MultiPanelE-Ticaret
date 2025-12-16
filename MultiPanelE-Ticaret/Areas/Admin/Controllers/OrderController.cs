@@ -95,6 +95,21 @@ namespace MultiPanelE_Ticaret.Areas.Admin.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+        [HttpPost]
+        public async Task<IActionResult> AssignCourier(int orderId, string courierId)
+        {
+            var order = await _context.Orders.FindAsync(orderId);
+
+            if (order == null)
+                return NotFound();
+
+            order.CourierId = courierId;
+            order.Status = OrderStatus.AssignedToCourier;
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
 
     }
 }

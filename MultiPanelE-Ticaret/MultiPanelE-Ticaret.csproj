@@ -20,7 +20,6 @@
 
   <ItemGroup>
     <Folder Include="Areas\NewFolder\" />
-    <Folder Include="Core\DTOs\" />
     <Folder Include="Core\Interfaces\" />
     <Folder Include="Data\Configurations\" />
     <Folder Include="Services\Courier\" />

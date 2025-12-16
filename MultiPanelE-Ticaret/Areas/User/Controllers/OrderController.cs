@@ -6,7 +6,7 @@ using MultiPanelE_Ticaret.Areas.User.ViewModels;
 using MultiPanelE_Ticaret.Core.Entities;
 using MultiPanelE_Ticaret.Core.Enums;
 using MultiPanelE_Ticaret.Data.Context;
-
+using MultiPanelE_Ticaret.Core.DTOs;
 namespace MultiPanelE_Ticaret.Areas.User.Controllers
 {
     [Area("User")]
@@ -64,5 +64,56 @@ namespace MultiPanelE_Ticaret.Areas.User.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Checkout()
+        {
+            var cart = HttpContext.Session.GetObject<List<CartItem>>("cart");
+
+            if (cart == null || !cart.Any())
+                return RedirectToAction("Index");
+
+            var userId = _userManager.GetUserId(User)!;
+            var sellerId = cart.First().SellerId;
+
+            using var tx = await _context.Database.BeginTransactionAsync();
+
+            var order = new Order
+            {
+                UserId = userId,
+                SellerId = sellerId,
+                Status = OrderStatus.Created
+            };
+
+            _context.Orders.Add(order);
+            await _context.SaveChangesAsync();
+
+            foreach (var item in cart)
+            {
+                var product = await _context.Products.FindAsync(item.ProductId);
+                if (product == null || product.Stock < item.Quantity)
+                    throw new Exception("Stok yetersiz");
+
+                product.Stock -= item.Quantity;
+
+                _context.OrderItems.Add(new OrderItem
+                {
+                    OrderId = order.Id,
+                    ProductId = product.Id,
+                    SellerId = sellerId,
+                    Quantity = item.Quantity,
+                    Price = product.Price
+                });
+            }
+
+            await _context.SaveChangesAsync();
+            await tx.CommitAsync();
+
+            HttpContext.Session.Remove("cart");
+
+            return RedirectToAction("Success");
+        }
+
     }
 }
