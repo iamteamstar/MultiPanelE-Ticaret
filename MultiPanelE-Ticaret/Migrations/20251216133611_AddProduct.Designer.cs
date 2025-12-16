@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MultiPanelE_Ticaret.Data.Context;
 
@@ -11,9 +12,11 @@ using MultiPanelE_Ticaret.Data.Context;
 namespace MultiPanelE_Ticaret.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251216133611_AddProduct")]
+    partial class AddProduct
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -237,6 +240,9 @@ namespace MultiPanelE_Ticaret.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("SellerId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
@@ -248,44 +254,11 @@ namespace MultiPanelE_Ticaret.Migrations
 
                     b.HasIndex("CourierId");
 
+                    b.HasIndex("SellerId");
+
                     b.HasIndex("UserId");
 
                     b.ToTable("Orders");
-                });
-
-            modelBuilder.Entity("MultiPanelE_Ticaret.Core.Entities.OrderItem", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.Property<string>("SellerId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<decimal>("UnitPrice")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrderId");
-
-                    b.HasIndex("ProductId");
-
-                    b.HasIndex("SellerId");
-
-                    b.ToTable("OrderItems");
                 });
 
             modelBuilder.Entity("MultiPanelE_Ticaret.Core.Entities.Product", b =>
@@ -378,6 +351,11 @@ namespace MultiPanelE_Ticaret.Migrations
                         .HasForeignKey("CourierId")
                         .OnDelete(DeleteBehavior.Restrict);
 
+                    b.HasOne("MultiPanelE_Ticaret.Core.Entities.ApplicationUser", "Seller")
+                        .WithMany()
+                        .HasForeignKey("SellerId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("MultiPanelE_Ticaret.Core.Entities.ApplicationUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
@@ -386,34 +364,9 @@ namespace MultiPanelE_Ticaret.Migrations
 
                     b.Navigation("Courier");
 
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("MultiPanelE_Ticaret.Core.Entities.OrderItem", b =>
-                {
-                    b.HasOne("MultiPanelE_Ticaret.Core.Entities.Order", "Order")
-                        .WithMany("Items")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MultiPanelE_Ticaret.Core.Entities.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("MultiPanelE_Ticaret.Core.Entities.ApplicationUser", "Seller")
-                        .WithMany()
-                        .HasForeignKey("SellerId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Order");
-
-                    b.Navigation("Product");
-
                     b.Navigation("Seller");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("MultiPanelE_Ticaret.Core.Entities.Product", b =>
@@ -425,11 +378,6 @@ namespace MultiPanelE_Ticaret.Migrations
                         .IsRequired();
 
                     b.Navigation("Seller");
-                });
-
-            modelBuilder.Entity("MultiPanelE_Ticaret.Core.Entities.Order", b =>
-                {
-                    b.Navigation("Items");
                 });
 #pragma warning restore 612, 618
         }

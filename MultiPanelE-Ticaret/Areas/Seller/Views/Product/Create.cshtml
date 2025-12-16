@@ -1,0 +1,21 @@
+﻿@model MultiPanelE_Ticaret.Areas.Seller.ViewModels.ProductCreateViewModel
+
+<h2>Yeni Ürün</h2>
+
+<form asp-area="Seller"
+      asp-controller="Product"
+      asp-action="Create"
+      method="post">
+
+    @Html.AntiForgeryToken()
+
+    <input asp-for="Name" placeholder="Ürün Adı" />
+    <input asp-for="Price" placeholder="Fiyat" />
+    <input asp-for="Stock" placeholder="Stok" />
+
+    <button type="submit">Kaydet</button>
+
+    <div style="color:red">
+        @Html.ValidationSummary()
+    </div>
+</form>

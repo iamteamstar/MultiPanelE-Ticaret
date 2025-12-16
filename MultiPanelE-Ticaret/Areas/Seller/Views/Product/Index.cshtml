@@ -1,0 +1,39 @@
+﻿@model IEnumerable<MultiPanelE_Ticaret.Core.Entities.Product>
+
+<h2>Ürünlerim</h2>
+
+<p>
+    <a href="/Seller/Product/Create">➕ Yeni Ürün Ekle</a>
+</p>
+
+<table border="1" cellpadding="6">
+    <thead>
+        <tr>
+            <th>Ad</th>
+            <th>Fiyat</th>
+            <th>Stok</th>
+            <th>Durum</th>
+            <th>İşlem</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var p in Model)
+        {
+            <tr>
+                <td>@p.Name</td>
+                <td>@p.Price</td>
+                <td>@p.Stock</td>
+                <td>
+                    @(p.IsActive ? "Aktif" : "Pasif")
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@p.Id">✏️ Güncelle</a>
+                    |
+                    <a asp-action="ToggleStatus" asp-route-id="@p.Id">
+                        @(p.IsActive ? "Pasif Yap" : "Aktif Yap")
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

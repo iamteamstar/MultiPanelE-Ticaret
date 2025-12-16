@@ -1,0 +1,18 @@
+﻿@model MultiPanelE_Ticaret.Core.Entities.Product
+
+<h2>Ürün Düzenle</h2>
+
+<form method="post">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="Id" />
+
+    <input asp-for="Name" />
+    <input asp-for="Price" />
+    <input asp-for="Stock" />
+
+    <label>
+        <input asp-for="IsActive" /> Aktif
+    </label>
+
+    <button type="submit">Güncelle</button>
+</form>
