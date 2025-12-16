@@ -1,0 +1,34 @@
+﻿@model MultiPanelE_Ticaret.Areas.Admin.ViewModels.AssignCourierViewModel
+
+<h2>Kurye Ata</h2>
+
+<form asp-action="Assign" method="post">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="OrderId" />
+
+    <div>
+        <label>Kurye Seç</label>
+        <select asp-for="CourierId">
+            <option value="">-- Seçiniz --</option>
+            @foreach (var c in Model.Couriers)
+            {
+                if (!c.IsActive)
+                {
+                    <option value="@c.Id" disabled="disabled">@c.Email (Pasif)</option>
+                }
+                else
+                {
+                    <option value="@c.Id">@c.Email</option>
+                }
+            }
+
+        </select>
+        <span asp-validation-for="CourierId"></span>
+    </div>
+
+    <button type="submit">Ata</button>
+
+    <div style="color:red">
+        @Html.ValidationSummary()
+    </div>
+</form>

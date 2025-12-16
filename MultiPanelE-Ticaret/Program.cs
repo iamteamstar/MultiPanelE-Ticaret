@@ -2,13 +2,14 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MultiPanelE_Ticaret.Core.Entities;
 using MultiPanelE_Ticaret.Data.Context;
+using MultiPanelE_Ticaret.Services.Order;
 
 var builder = WebApplication.CreateBuilder(args);
 
 
 
 builder.Services.AddControllersWithViews();
-
+builder.Services.AddScoped<IOrderStateService, OrderStateService>();
 // DbContext
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(

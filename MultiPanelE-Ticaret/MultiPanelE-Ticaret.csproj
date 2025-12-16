@@ -24,7 +24,6 @@
     <Folder Include="Data\Configurations\" />
     <Folder Include="Services\Courier\" />
     <Folder Include="Services\User\" />
-    <Folder Include="Services\Order\" />
     <Folder Include="Web\Hubs\" />
   </ItemGroup>
 

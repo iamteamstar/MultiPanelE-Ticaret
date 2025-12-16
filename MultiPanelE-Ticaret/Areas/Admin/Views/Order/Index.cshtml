@@ -1,0 +1,83 @@
+﻿@using MultiPanelE_Ticaret.Core.Enums
+@model IEnumerable<MultiPanelE_Ticaret.Core.Entities.Order>
+
+@{
+    ViewData["Title"] = "Sipariş Yönetimi";
+}
+
+<h2>Sipariş Yönetimi</h2>
+
+<table border="1" cellpadding="6" cellspacing="0">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Kullanıcı</th>
+            <th>Durum</th>
+            <th>Kurye</th>
+            <th>İşlemler</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (!Model.Any())
+        {
+            <tr>
+                <td colspan="5">Sipariş bulunamadı.</td>
+            </tr>
+        }
+        else
+        {
+            @foreach (var o in Model)
+            {
+                <tr>
+                    <td>@o.Id</td>
+                    <td>@o.User?.Email</td>
+                    <td>
+                        <strong>@o.Status</strong>
+                    </td>
+                    <td>
+                        @(o.Courier?.Email ?? "-")
+                    </td>
+                    <td>
+                        @* CREATED → Kurye Ata *@
+                        @if (o.Status == OrderStatus.Created)
+                        {
+                            <a asp-area="Admin"
+                               asp-controller="Order"
+                               asp-action="Assign"
+                               asp-route-id="@o.Id">
+                                🚚 Kurye Ata
+                            </a>
+                        }
+                        @* PREPARING → Yola Çıkar *@
+                        else if (o.Status == OrderStatus.Preparing)
+                        {
+                            <a asp-area="Admin"
+                               asp-controller="Order"
+                               asp-action="ChangeStatus"
+                               asp-route-id="@o.Id"
+                               asp-route-nextStatus="OnTheWay">
+                                ▶️ Yola Çıkar
+                            </a>
+                        }
+                        @* ON THE WAY → Teslim Et *@
+                        else if (o.Status == OrderStatus.OnTheWay)
+                        {
+                            <a asp-area="Admin"
+                               asp-controller="Order"
+                               asp-action="ChangeStatus"
+                               asp-route-id="@o.Id"
+                               asp-route-nextStatus="Delivered">
+                                ✅ Teslim Et
+                            </a>
+                        }
+                        @* DELIVERED *@
+                        else if (o.Status == OrderStatus.Delivered)
+                        {
+                            <span style="color:green;">✔ Tamamlandı</span>
+                        }
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
