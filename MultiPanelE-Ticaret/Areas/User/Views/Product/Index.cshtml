@@ -1,0 +1,29 @@
+﻿@model IEnumerable<MultiPanelE_Ticaret.Core.Entities.Product>
+
+<h2>Ürünler</h2>
+
+<table border="1" cellpadding="6">
+    <tr>
+        <th>Ad</th>
+        <th>Fiyat</th>
+        <th>Stok</th>
+        <th></th>
+    </tr>
+
+    @foreach (var p in Model)
+    {
+        <tr>
+            <td>@p.Name</td>
+            <td>@p.Price ₺</td>
+            <td>@p.Stock</td>
+            <td>
+                <a asp-area="User"
+                   asp-controller="Cart"
+                   asp-action="Add"
+                   asp-route-productId="@p.Id">
+                    Sepete Ekle
+                </a>
+            </td>
+        </tr>
+    }
+</table>

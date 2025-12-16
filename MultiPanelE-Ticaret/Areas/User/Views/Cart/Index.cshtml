@@ -1,0 +1,36 @@
+﻿@model List<MultiPanelE_Ticaret.Areas.User.ViewModels.CartItemViewModel>
+
+<h2>Sepetim</h2>
+
+@if (!Model.Any())
+{
+    <p>Sepet boş</p>
+}
+else
+{
+    <table border="1" cellpadding="6">
+        <tr>
+            <th>Ürün</th>
+            <th>Fiyat</th>
+            <th>Adet</th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Price ₺</td>
+                <td>@item.Quantity</td>
+                <td>
+                    <a asp-action="Remove"
+                       asp-route-productId="@item.ProductId">
+                        Sil
+                    </a>
+                </td>
+            </tr>
+        }
+    </table>
+
+    <p><b>Toplam:</b> @Model.Sum(x => x.Price * x.Quantity) ₺</p>
+}

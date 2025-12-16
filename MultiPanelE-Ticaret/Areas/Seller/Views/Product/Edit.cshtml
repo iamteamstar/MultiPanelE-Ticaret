@@ -1,9 +1,10 @@
-﻿@model MultiPanelE_Ticaret.Core.Entities.Product
+﻿@model MultiPanelE_Ticaret.Areas.Seller.ViewModels.ProductEditViewModel
 
 <h2>Ürün Düzenle</h2>
 
 <form method="post">
     @Html.AntiForgeryToken()
+
     <input type="hidden" asp-for="Id" />
 
     <input asp-for="Name" />
@@ -15,4 +16,8 @@
     </label>
 
     <button type="submit">Güncelle</button>
+
+    <div style="color:red">
+        @Html.ValidationSummary()
+    </div>
 </form>

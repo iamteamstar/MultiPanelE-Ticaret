@@ -7,7 +7,7 @@ using MultiPanelE_Ticaret.Core.Entities;
 using MultiPanelE_Ticaret.Core.Enums;
 using MultiPanelE_Ticaret.Data.Context;
 
-namespace MultiPanelE_Ticaret.Areas.Seller.Controllers
+namespace MufltiPanelE_Ticaret.Areas.Seller.Controllers
 {
     [Area("Seller")]
     [Authorize(Roles = Roles.Seller)]
@@ -65,7 +65,7 @@ namespace MultiPanelE_Ticaret.Areas.Seller.Controllers
         }
 
 
-        // EDIT (GET)
+        [HttpGet("Seller/Product/Edit/{id:int}")]
         public async Task<IActionResult> Edit(int id)
         {
             var sellerId = _userManager.GetUserId(User);
@@ -76,13 +76,22 @@ namespace MultiPanelE_Ticaret.Areas.Seller.Controllers
             if (product == null)
                 return NotFound();
 
-            return View(product);
+            var vm = new ProductEditViewModel
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Price = product.Price,
+                Stock = product.Stock,
+                IsActive = product.IsActive
+            };
+
+            return View(vm);
         }
 
         // EDIT (POST)
-        [HttpPost]
+        [HttpPost("Seller/Product/Edit/{id:int}")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Product model)
+        public async Task<IActionResult> Edit(int id, ProductEditViewModel model)
         {
             if (!ModelState.IsValid)
                 return View(model);
@@ -90,7 +99,7 @@ namespace MultiPanelE_Ticaret.Areas.Seller.Controllers
             var sellerId = _userManager.GetUserId(User);
 
             var product = await _context.Products
-                .FirstOrDefaultAsync(p => p.Id == model.Id && p.SellerId == sellerId);
+                .FirstOrDefaultAsync(p => p.Id == id && p.SellerId == sellerId);
 
             if (product == null)
                 return NotFound();
@@ -104,6 +113,8 @@ namespace MultiPanelE_Ticaret.Areas.Seller.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
+
         public async Task<IActionResult> ToggleStatus(int id)
         {
             var sellerId = _userManager.GetUserId(User);
