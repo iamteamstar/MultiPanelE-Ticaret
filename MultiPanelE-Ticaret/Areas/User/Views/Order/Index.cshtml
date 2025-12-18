@@ -1,27 +1,27 @@
-﻿@model IEnumerable<MultiPanelE_Ticaret.Core.Entities.Order>
+﻿@model List<MultiPanelE_Ticaret.Core.Entities.Order>
 
 <h2>Siparişlerim</h2>
 
-<p>
-    <a href="/User/Order/Create">➕ Yeni Sipariş</a>
-</p>
-
-<table border="1" cellpadding="6">
-    <thead>
+@if (!Model.Any())
+{
+    <p>Henüz siparişiniz yok.</p>
+}
+else
+{
+    <table class="table">
         <tr>
-            <th>#</th>
-            <th>Durum</th>
+            <th>ID</th>
             <th>Tarih</th>
+            <th>Durum</th>
         </tr>
-    </thead>
-    <tbody>
-        @foreach (var o in Model)
+
+        @foreach (var order in Model)
         {
             <tr>
-                <td>@o.Id</td>
-                <td>@o.Status</td>
-                <td>@o.CreatedAt.ToString("dd.MM.yyyy HH:mm")</td>
+                <td>@order.Id</td>
+                <td>@order.CreatedAt</td>
+                <td>@order.Status</td>
             </tr>
         }
-    </tbody>
-</table>
+    </table>
+}

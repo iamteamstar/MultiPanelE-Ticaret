@@ -1,16 +1,19 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.Text.Json;
 
-public static class SessionExtensions
+namespace MultiPanelE_Ticaret.Extensions
 {
-    public static void SetObject<T>(this ISession session, string key, T value)
+    public static class SessionExtensions
     {
-        session.SetString(key, JsonSerializer.Serialize(value));
-    }
+        public static void SetObject<T>(this ISession session, string key, T value)
+        {
+            session.SetString(key, JsonSerializer.Serialize(value));
+        }
 
-    public static T? GetObject<T>(this ISession session, string key)
-    {
-        var value = session.GetString(key);
-        return value == null ? default : JsonSerializer.Deserialize<T>(value);
+        public static T? GetObject<T>(this ISession session, string key)
+        {
+            var value = session.GetString(key);
+            return value == null ? default : JsonSerializer.Deserialize<T>(value);
+        }
     }
 }

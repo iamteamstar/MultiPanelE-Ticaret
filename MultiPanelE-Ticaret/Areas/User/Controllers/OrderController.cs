@@ -3,10 +3,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MultiPanelE_Ticaret.Areas.User.ViewModels;
+using MultiPanelE_Ticaret.Core.DTOs;
 using MultiPanelE_Ticaret.Core.Entities;
 using MultiPanelE_Ticaret.Core.Enums;
 using MultiPanelE_Ticaret.Data.Context;
-using MultiPanelE_Ticaret.Core.DTOs;
+using MultiPanelE_Ticaret.Extensions;
 namespace MultiPanelE_Ticaret.Areas.User.Controllers
 {
     [Area("User")]
@@ -23,6 +24,7 @@ namespace MultiPanelE_Ticaret.Areas.User.Controllers
         }
 
         // ✅ /User/Order
+        // GET: /User/Order
         public async Task<IActionResult> Index()
         {
             var userId = _userManager.GetUserId(User);
@@ -35,26 +37,32 @@ namespace MultiPanelE_Ticaret.Areas.User.Controllers
             return View(orders);
         }
 
+
         // ✅ /User/Order/Create
+        // GET
         [HttpGet]
         public IActionResult Create()
         {
             return View();
         }
 
-        // ✅ /User/Order/Create (POST)
+        // POST
+        // POST: /User/Order/CreateOrder
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(CreateOrderViewModel model)
+        public async Task<IActionResult> CreateOrder()
         {
-            if (!ModelState.IsValid)
-                return View(model);
+            var cart = HttpContext.Session.GetObject<List<CartItem>>("cart");
+
+            if (cart == null || !cart.Any())
+                return RedirectToAction("Cart");
 
             var userId = _userManager.GetUserId(User);
 
             var order = new Order
             {
                 UserId = userId!,
+                SellerId = cart.First().SellerId,
                 Status = OrderStatus.Created,
                 CreatedAt = DateTime.UtcNow
             };
@@ -62,8 +70,25 @@ namespace MultiPanelE_Ticaret.Areas.User.Controllers
             _context.Orders.Add(order);
             await _context.SaveChangesAsync();
 
+            foreach (var item in cart)
+            {
+                _context.OrderItems.Add(new OrderItem
+                {
+                    OrderId = order.Id,
+                    ProductId = item.ProductId,
+                    Quantity = item.Quantity,
+                    Price = item.Price,
+                    SellerId = item.SellerId
+                });
+            }
+
+            await _context.SaveChangesAsync();
+            HttpContext.Session.Remove("cart");
+
             return RedirectToAction(nameof(Index));
         }
+
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -72,17 +97,14 @@ namespace MultiPanelE_Ticaret.Areas.User.Controllers
             var cart = HttpContext.Session.GetObject<List<CartItem>>("cart");
 
             if (cart == null || !cart.Any())
-                return RedirectToAction("Index");
+                return RedirectToAction("Cart");
 
-            var userId = _userManager.GetUserId(User)!;
-            var sellerId = cart.First().SellerId;
-
-            using var tx = await _context.Database.BeginTransactionAsync();
+            var userId = _userManager.GetUserId(User);
 
             var order = new Order
             {
                 UserId = userId,
-                SellerId = sellerId,
+                SellerId = cart.First().SellerId,
                 Status = OrderStatus.Created
             };
 
@@ -91,29 +113,67 @@ namespace MultiPanelE_Ticaret.Areas.User.Controllers
 
             foreach (var item in cart)
             {
-                var product = await _context.Products.FindAsync(item.ProductId);
-                if (product == null || product.Stock < item.Quantity)
-                    throw new Exception("Stok yetersiz");
-
-                product.Stock -= item.Quantity;
-
                 _context.OrderItems.Add(new OrderItem
                 {
                     OrderId = order.Id,
-                    ProductId = product.Id,
-                    SellerId = sellerId,
+                    ProductId = item.ProductId,
                     Quantity = item.Quantity,
-                    Price = product.Price
+                    Price = item.Price,
+                    SellerId = item.SellerId
                 });
+
+                var product = await _context.Products.FindAsync(item.ProductId);
+                if (product != null)
+                    product.Stock -= item.Quantity;
             }
 
             await _context.SaveChangesAsync();
-            await tx.CommitAsync();
-
             HttpContext.Session.Remove("cart");
 
-            return RedirectToAction("Success");
+            return RedirectToAction("Index");
         }
+
+        [HttpPost]
+        public IActionResult Increase(int productId)
+        {
+            var cart = HttpContext.Session.GetObject<List<CartItem>>("cart") ?? new();
+            var item = cart.First(x => x.ProductId == productId);
+            item.Quantity++;
+            HttpContext.Session.SetObject("cart", cart);
+            return RedirectToAction("Cart");
+        }
+
+        [HttpPost]
+        public IActionResult Decrease(int productId)
+        {
+            var cart = HttpContext.Session.GetObject<List<CartItem>>("cart");
+            var item = cart?.FirstOrDefault(x => x.ProductId == productId);
+
+            if (item != null)
+            {
+                item.Quantity--;
+                if (item.Quantity <= 0)
+                    cart!.Remove(item);
+            }
+
+            HttpContext.Session.SetObject("cart", cart);
+            return RedirectToAction("Cart");
+        }
+
+        [HttpPost]
+        public IActionResult Remove(int productId)
+        {
+            var cart = HttpContext.Session.GetObject<List<CartItem>>("cart") ?? new();
+
+            var item = cart.FirstOrDefault(x => x.ProductId == productId);
+            if (item != null)
+                cart.Remove(item);
+
+            HttpContext.Session.SetObject("cart", cart);
+            return RedirectToAction("Cart");
+        }
+       
+
 
     }
 }

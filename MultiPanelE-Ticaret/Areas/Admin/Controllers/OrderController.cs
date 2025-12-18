@@ -104,7 +104,7 @@ namespace MultiPanelE_Ticaret.Areas.Admin.Controllers
                 return NotFound();
 
             order.CourierId = courierId;
-            order.Status = OrderStatus.AssignedToCourier;
+            order.Status = OrderStatus.OnTheWay;
 
             await _context.SaveChangesAsync();
 
