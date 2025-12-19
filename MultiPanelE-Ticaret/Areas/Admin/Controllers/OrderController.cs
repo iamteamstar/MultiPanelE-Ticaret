@@ -74,7 +74,7 @@ namespace MultiPanelE_Ticaret.Areas.Admin.Controllers
             if (order == null)
                 return NotFound();
 
-            order.CourierId = model.CourierId;
+            order.eCourierId = model.CourierId;
             order.Status = OrderStatus.Preparing;
 
             await _context.SaveChangesAsync();

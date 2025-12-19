@@ -10,12 +10,11 @@
         public int ProductId { get; set; }
         public Product Product { get; set; } = default!;
 
+        // FK -> AspNetUsers.Id (string)
         public string SellerId { get; set; } = default!;
         public ApplicationUser Seller { get; set; } = default!;
 
         public int Quantity { get; set; }
         public decimal Price { get; set; }
     }
-
-
 }

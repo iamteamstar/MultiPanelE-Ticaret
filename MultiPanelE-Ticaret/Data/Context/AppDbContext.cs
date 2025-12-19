@@ -17,42 +17,50 @@ namespace MultiPanelE_Ticaret.Data.Context
         {
             base.OnModelCreating(builder);
 
-            // ORDER → USER
+            // ORDER -> USER
             builder.Entity<Order>()
                 .HasOne(o => o.User)
                 .WithMany()
                 .HasForeignKey(o => o.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // ORDER → COURIER
+            // ORDER -> COURIER (optional)
             builder.Entity<Order>()
                 .HasOne(o => o.Courier)
                 .WithMany()
                 .HasForeignKey(o => o.CourierId)
+                .IsRequired(false)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // PRODUCT → SELLER
+            // ORDER -> SELLER
+            builder.Entity<Order>()
+                .HasOne(o => o.Seller)
+                .WithMany()
+                .HasForeignKey(o => o.SellerId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // PRODUCT -> SELLER
             builder.Entity<Product>()
                 .HasOne(p => p.Seller)
                 .WithMany()
                 .HasForeignKey(p => p.SellerId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // ORDERITEM → SELLER
+            // ORDERITEM -> SELLER
             builder.Entity<OrderItem>()
                 .HasOne(i => i.Seller)
                 .WithMany()
                 .HasForeignKey(i => i.SellerId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // ORDERITEM → PRODUCT
+            // ORDERITEM -> PRODUCT
             builder.Entity<OrderItem>()
                 .HasOne(i => i.Product)
                 .WithMany()
                 .HasForeignKey(i => i.ProductId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // ORDERITEM → ORDER
+            // ORDERITEM -> ORDER
             builder.Entity<OrderItem>()
                 .HasOne(i => i.Order)
                 .WithMany(o => o.Items)

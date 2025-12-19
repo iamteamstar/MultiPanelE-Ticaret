@@ -3,9 +3,11 @@
     public class CartItem
     {
         public int ProductId { get; set; }
-        public string SellerId { get; set; } = default!;
-        public string Name { get; set; } = default!;
+        public string ProductName { get; set; } = default!;
         public decimal Price { get; set; }
         public int Quantity { get; set; }
+
+        // AspNetUsers.Id -> string
+        public string SellerId { get; set; } = default!;
     }
 }

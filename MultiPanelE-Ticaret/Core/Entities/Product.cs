@@ -5,19 +5,12 @@ namespace MultiPanelE_Ticaret.Core.Entities
     public class Product
     {
         public int Id { get; set; }
-
-        [Required]
-        public string Name { get; set; } = "";
-
-        [Range(0, double.MaxValue)]
+        public string Name { get; set; } = default!;
         public decimal Price { get; set; }
-
         public int Stock { get; set; }
 
-        public bool IsActive { get; set; } = true;
-
-        // Seller
-        public string SellerId { get; set; } = null!;
-        public ApplicationUser Seller { get; set; } = null!;
+        // FK -> AspNetUsers.Id (string)
+        public string SellerId { get; set; } = default!;
+        public ApplicationUser Seller { get; set; } = default!;
     }
 }
